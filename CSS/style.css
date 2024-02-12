@@ -1,0 +1,101 @@
+body {
+    background: rgb(26, 24, 49);
+}
+
+#canvas1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid white;
+    width: 800px;
+    height: 720px;
+    display: none;
+}
+
+#playerImage,
+#backgroundImage,
+#enemyImage,
+#diamondsImage {
+    display: none;
+
+}
+
+#openPage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid white;
+    width: 800px;
+    height: 720px;
+    display: block;
+    overflow: hidden;
+    background: rgb(45,149,179);
+    background: radial-gradient(circle, rgba(45,149,179,1) 0%, rgba(20,62,61,1) 100%);
+    /* background: rgb(57, 26, 17);
+    background: radial-gradient(circle, rgba(57, 26, 17, 1) 0%, rgba(14, 1, 5, 1) 100%); */
+    /* background: rgb(94, 56, 35);
+    background: radial-gradient(circle, rgba(94, 56, 35, 1) 0%, rgba(14, 1, 5, 1) 100%); */
+}
+
+#background {
+    width: 1000px;
+    height: 720px;
+   
+    /* object-fit:cover; */
+    position: absolute;
+
+}
+
+#board {
+    width: 345px;
+    height: 450px;
+}
+
+#explain {
+    position: relative;
+    padding: 14px;
+    display: inline-block;
+    font-family: inherit;
+    background-color: transparent;
+    margin-left: 5%;
+    margin-top: 10%;
+}
+
+#explain p {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #111103;
+    font-size: 24px;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#playBtn {
+    position: relative;
+    padding: 14px;
+    display: inline-block;
+    font-family: 'Honk', system-ui;
+    background-color: transparent;
+    margin-left: 11%;
+    margin-top: 74%;
+    border: none;
+    cursor: pointer;
+    appearance: none;
+    background-color: inherit;
+}
+
+.bottun-text {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #0e1a08;
+    font-size: 60px;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
