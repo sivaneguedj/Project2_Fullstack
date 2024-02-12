@@ -1,0 +1,236 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'Super Space';
+    src: url('/Super_Space/Super Space.otf') format('truetype');
+}
+
+body {
+    background-image: url('/IMG/rg1.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    position: relative; 
+}
+
+body::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust transparency (0.5 is 50% transparent black) */
+    z-index: -1; 
+}
+
+.container {
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    left: 60%;
+    width: 60%;
+    height: 70%;
+    transform: translate(-50%, -50%);
+}
+
+.registration_container {
+    position: relative;
+    height: 100%; 
+    width: 90%;
+    background-color: transparent;
+    border-radius: 0 16% 16% 16%;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); 
+    backdrop-filter: blur(20px);
+    color: white;
+    z-index: 1; 
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    padding: 10px 2px 10px 10px; 
+    
+}
+
+
+/* Registration and Log-In */
+
+.tabs {
+    display: flex;
+}
+
+.tab {
+    background-color: black;
+    color: #ccc;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    outline: none;
+}
+
+#registerTab {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 15%;
+}
+
+#loginTab {
+    border-top-right-radius: 15%;
+    border-bottom-right-radius: 15%;
+}
+
+.registration_container .tabContent{
+    width: 100%;
+    
+    padding: 40px;
+}
+
+.tabContent{
+    display: none;
+}
+
+.tabContent h2 {
+    font-size: 2em;
+    font-family: 'Super Space';
+    text-align: center;
+}
+
+.tab.active {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+.tabContent.active {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.tab:hover {
+    background-color: white;
+    color: black;
+    border-bottom: 3px solid black;
+    border-top: 3px solid black;
+    border-right: 3px solid black;
+}
+
+.div_input_form {
+    position: relative;
+    background: transparent;
+    margin-bottom: 10px; 
+    width: 90%;
+    border-bottom: 2px solid white;
+    margin: 30px 0;
+}
+
+
+.div_input_form label {
+    position: absolute;
+    width: 100%;
+    top: 80%;
+    left: 5px;
+    transform: translateY(-50%);
+    margin-top: 15px;
+    pointer-events: none;
+    transition: .5s;
+}
+
+
+.div_input_form input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    color: white;
+    border: none;
+    outline: none;
+}
+
+.div_input_form .icon {
+    position: absolute;
+    right: 10px;
+    line-height: 50pex;
+}
+
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0 15px;
+}
+
+.remember-forgot a:hover {
+    text-decoration: underline;
+}
+
+.validate_btn{
+    width: 50%;
+    margin-top: 10px;
+    margin-left: 20%;
+    padding: 5px;
+    border-radius: 15px; 
+    border: 2px solid #ccc; 
+    background: transparent; 
+    color: white; 
+    font-weight: bolder;
+    font-size: large;
+    outline: none; 
+}
+
+.validate_btn:hover {
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+}
+
+.input_form::placeholder {
+    color: gray;
+}
+
+.hide{
+    visibility: hidden;
+}
+
+
+@media screen and (max-width: 700px) {
+    .registration_container {
+        width: 100%;
+    }
+
+    .container {
+        height: 70%;
+        width: 60%;
+    }
+
+    .tabs {
+        width: 50%;
+        height: 10%;
+    }
+
+    .tabContent {
+        width: 100%;
+        font-size: 0.7rem;
+    }
+
+    .validate_btn {
+        font-size: small;
+    }
+    
+}
+
+@media screen and (min-width: 900px) {
+    .registration_container {
+        height: 90%; 
+        width: 70%;
+    }
+
+    .tabContent {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+}
+

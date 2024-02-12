@@ -1,0 +1,72 @@
+/* General styles */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Header styles */
+header {
+    background-image: url('/IMG/header2.jpeg'); 
+    background-size: cover;
+    color: #fff;
+    font-family: 'Super Space';
+    text-align: center;
+    padding: 50px 0;
+}
+
+@font-face {
+    font-family: 'Super Space';
+    src: url('/Super_Space/Super Space.otf') format('truetype');
+}
+
+.gradient-text {
+    background-image: linear-gradient(to bottom, #FFFFFF, #FFA500);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Main content styles */
+main {
+    padding: 20px;
+}
+
+.game-container {
+    display: grid;
+    grid-template-columns: repeat(4, auto); 
+    grid-template-rows: repeat(2, auto); 
+    justify-content: space-evenly;
+    gap: 20px;
+}
+
+.game {
+    width: 270px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.game img {
+    max-width: 100%; 
+    max-height: 100%; 
+}   
+
+
+/* Footer styles */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
