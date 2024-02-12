@@ -8,7 +8,7 @@
 }
 
 body {
-    background-image: url('../IMG/rg1.jpg');
+    background-image: url('../IMG/5073414.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     height: 100vh;
@@ -22,7 +22,8 @@ body::after {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Adjust transparency (0.5 is 50% transparent black) */
+    /* Adjust transparency (0.5 is 50% transparent black) */
+    /* background-color: rgba(0, 0, 0, 0.5);  */
     z-index: -1; 
 }
 
@@ -44,7 +45,7 @@ body::after {
     background-color: transparent;
     border-radius: 0 16% 16% 16%;
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); 
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(10px);
     color: white;
     z-index: 1; 
     display: flex;
