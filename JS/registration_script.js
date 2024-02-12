@@ -31,21 +31,27 @@ document.addEventListener("DOMContentLoaded", function() {
             username: "sivane",
             birthday: "23/02/1999",
             mail: "sivane11@hotmail.fr",
-            password: "sivane123456"
+            password: "sivane123456", 
+            scoreGame1: "7/10",
+            scoreGame2: "200 points"
         },
         {  lastName: "Maximov",
         firstName: "Yael",
         username: "yaeli",
         birthday: "19/04/2000",
         mail: "yaeli@gmail.com",
-        password: "yaeli19"
+        password: "yaeli19", 
+        scoreGame1: "8/10",
+        scoreGame2: "150 points"
         },
         {  lastName: "sparks",
         firstName: "John",
         username: "johnny",
         birthday: "30/06/2005",
         mail: "johnsparks@gmail.com",
-        password: "johnSparks769"
+        password: "johnSparks769", 
+        scoreGame1: "3/10",
+        scoreGame2: "50 points"
         }
 
     ];
