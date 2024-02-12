@@ -33,7 +33,7 @@ body::after {
     top: 50%;
     left: 60%;
     width: 60%;
-    height: 70%;
+    height: 80%;
     transform: translate(-50%, -50%);
 }
 
@@ -51,7 +51,7 @@ body::after {
     justify-content: center; 
     align-items: center;
     padding: 10px 2px 10px 10px; 
-    
+    overflow: hidden;
 }
 
 
@@ -82,9 +82,13 @@ body::after {
 
 .registration_container .tabContent{
     width: 100%;
-
     padding: 40px;
 }
+
+.registration_container .tabContent.loginBox{
+    position: absolute;
+}
+
 
 .tabContent{
     display: none;
@@ -120,7 +124,7 @@ body::after {
     position: relative;
     background: transparent;
     margin-bottom: 10px; 
-    width: 90%;
+    width: 100%;
     border-bottom: 2px solid white;
     margin: 30px 0;
 }
@@ -145,6 +149,12 @@ body::after {
     color: white;
     border: none;
     outline: none;
+   
+}
+
+
+.tabContent.loginBox .div_input_form input {
+    background: transparent;
 }
 
 .div_input_form .icon {
@@ -192,7 +202,7 @@ body::after {
 }
 
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 600px) {
     .registration_container {
         width: 100%;
     }
@@ -216,11 +226,15 @@ body::after {
         font-size: small;
     }
     
+    .div_input_form input {
+        width: 80%;
+        margin: 0; 
+    }
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (min-width: 600px) {
     .registration_container {
-        height: 90%; 
+        height: 100%; 
         width: 70%;
     }
 
@@ -230,6 +244,10 @@ body::after {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+    }
+
+    .div_input_form input {
+        width: 100%; 
     }
     
 }

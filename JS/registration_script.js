@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function() {
         mail: "yaeli@gmail.com",
         password: "yaeli19"
         },
-        ,
         {  lastName: "sparks",
         firstName: "John",
         username: "johnny",
@@ -62,28 +61,6 @@ document.addEventListener("DOMContentLoaded", function() {
         registerTab.classList.remove("active");
         loginContent.classList.remove("hide");
         registerContent.classList.add("hide");
-        register_btn.classList.remove("log_style");
-        login_btn.classList.add("log_style");
-
-        /*
-        // Update the register form's onsubmit attribute to validate the login form
-        login_btn.onsubmit = function(event) {
-            event.preventDefault();
-            if(validateForm("logForm") === true){
-                // check if this user is already registered in the system
-                if(checkUserExists(username_log)) {
-                    loginUser(username_log.value, password_log.value); // MSSAGE + BUTTON TO LOGIN
-                }
-                else{
-                    alert("This user does not exist in the system, Do you want to register?"); // MSSAGE + BUTTON TO LOGIN
-                }
-            }
-            else {
-                return validateForm("logForm");
-            }
-            
-        };
-        */
     });
 
 
@@ -96,35 +73,7 @@ document.addEventListener("DOMContentLoaded", function() {
         loginTab.classList.remove("active");
         loginContent.classList.add("hide");
         registerContent.classList.remove("hide");
-        login_btn.classList.remove("log_style");
-        register_btn.classList.add("log_style");
 
-
-        /*
-        // Update the register form's onsubmit attribute to validate the register form
-        register_btn.onsubmit = function(event) {
-            event.preventDefault();
-            if(validateForm("regForm") === true){
-                // check that the email and password confirmation are correct
-                checkConfirmations(mail.value, mail_conf.value, password.value, pas_conf.value);
-                // check if this username is already taken
-                if(checkUserExists(username_reg)) {
-                    alert("This username already exist in the system, Choose another one"); // MSSAGE + BUTTON TO LOGIN
-                }
-                // check if this username is already registered in the system
-                else if (checkUserExistsRegistration(mail)) {
-                    alert("This user already exist in the system, Do you want to log in?"); // MSSAGE + BUTTON TO LOGIN
-
-                }
-                else{
-                    registerUser(last_name.value, first_name.value, username_reg.value, birthday.value, mail.value, mail_conf.value, password.value, pas_conf.value);
-                }
-            }
-            else {
-                return validateForm("regForm");
-            }
-        };
-        */
     });
 
 
@@ -176,18 +125,27 @@ document.addEventListener("DOMContentLoaded", function() {
                     return
                 }
 
-                pass = validatePassword(password);
-                if(validatePassword(password) != true) {
-                    alert("Password is invalid" + pass);
-                    return
-                }
                 // check if this email is already registered in the system
-                else if (checkUserExistsRegistration(mail.value)) {
+                if (checkUserExistsRegistration(mail.value)) {
                     alert("This email is already registered in the system. Do you want to log in?");
                 }
                 else {
+                    pass = validatePassword(password);
+                    if(pass != "true") {
+                        alert(pass);
+                    }else {
                     registerUser(last_name.value, first_name.value, username_reg.value, birthday.value, mail.value, password.value);
+                    }
                 }
+            }
+            else {
+                if (mail.value !== mail_conf.value) {
+                    alert('Incorrect mail, make sure you type exactly the same address'); // METTRE EN ROUGE
+                }
+                if(password.value !== pas_conf.value){
+                    alert('Incorrect password, make sure you type exactly the password'); // METTRE EN ROUGE
+                    
+                } 
             }
         }
     });
@@ -225,15 +183,8 @@ document.addEventListener("DOMContentLoaded", function() {
         if (mail === mail_conf && password === pas_conf){
             return true;
         }
-        else if (mail !== mail_conf) {
-            mail_conf = 'Incorrect mail, make sure you type exactly the same address'; // METTRE EN ROUGE
+        else {
             return false;
-        } else if(password !== pas_conf){
-            pas_conf = 'Incorrect password, make sure you type exactly the password'; // METTRE EN ROUGE
-            return false;
-        } else {
-            mail_conf = 'Incorrect mail, make sure you type exactly the same address'; // METTRE EN ROUGE
-            pas_conf = 'Incorrect password, make sure you type exactly the password'; // METTRE EN ROUGE
         }
 
     }
@@ -246,7 +197,7 @@ document.addEventListener("DOMContentLoaded", function() {
         var users = JSON.parse(localStorage.getItem('users')) || [];
 
         // Check if the username exists in the stored user data
-        return users.some(user => user && user.username === username);
+        return users.some(user => user.username === username);
     }
 
 
@@ -256,7 +207,7 @@ document.addEventListener("DOMContentLoaded", function() {
         var users = JSON.parse(localStorage.getItem('users')) || [];
 
         // Check if the mail exists in the stored user data
-        return users.some(user => mail && user.mail === mail);
+        return users.some(user =>  user.mail === mail);
     }
 
 
@@ -269,8 +220,8 @@ document.addEventListener("DOMContentLoaded", function() {
         var newUser = {
             lastName: last_name,
             firstName: first_name,
-            username:username,
-            birthday:birthday,
+            username: username,
+            birthday: birthday,
             mail: mail,
             password: password
         };
@@ -282,6 +233,8 @@ document.addEventListener("DOMContentLoaded", function() {
         localStorage.setItem('users', JSON.stringify(users));
 
         alert("Registration successful."); 
+        // Redirect to the login tab
+        document.getElementById("loginTab").click();
     }
 
 
@@ -292,9 +245,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Check if the user is blocked
         const blockData = JSON.parse(localStorage.getItem('blockData')) || {};
-        const blockedUntil = blockData[username_log];
+        const blockedUntil = blockData[username];
         if (blockedUntil && Date.now() < blockedUntil) {
             alert("Your account is blocked. Please try again later.");
+            // Make the login input fields readonly
+            document.getElementById("username_log").readOnly = true;
+            document.getElementById("psd_log").readOnly = true;
+
+            // Schedule a task to make the inputs writable again after 1 minute
+            setTimeout(() => {
+                document.getElementById("username_log").readOnly = false;
+                document.getElementById("psd_log").readOnly = false;
+            }, 60000); // 1 minute in milliseconds
+
             return;
         }
 
@@ -308,15 +271,39 @@ document.addEventListener("DOMContentLoaded", function() {
             window.location.href = "/HTML/homepage.html"; // Redirect to homepage.html
         } else {
             // Increment login attempts
-            console.log('hi');
             const attempts = incrementLoginAttempts(username);
             alert(`Invalid username or password. You have ${maxAttempts - attempts} attempts left.`);
                 // Block the user if they have exceeded the maximum attempts
             if (attempts >= maxAttempts) {
                 blockUser(username);
                 alert("Your account has been blocked due to too many failed attempts. Please try again later.");
+                document.getElementById("username_log").readOnly = true;
+                document.getElementById("psd_log").readOnly = true;
+
+                // Schedule a task to make the inputs writable again after 1 minute
+                setTimeout(() => {
+                    document.getElementById("username_log").readOnly = false;
+                    document.getElementById("psd_log").readOnly = false;
+                }, 60000); // 1 minute in milliseconds
+
             }
         }
+    }
+
+
+    // Function to block the user
+    function blockUser(username) {
+        // Block the user by storing the block duration
+        const blockData = JSON.parse(localStorage.getItem('blockData')) || {};
+        blockData[username] = Date.now() + blockDuration;
+        localStorage.setItem('blockData', JSON.stringify(blockData));
+        
+        // Schedule a task to unblock the user and reset login attempts after 1 minute
+        setTimeout(() => {
+            delete blockData[username];
+            localStorage.setItem('blockData', JSON.stringify(blockData));
+            resetLoginAttempts(username);
+        }, 60000); // 1 minute in milliseconds
     }
 
 
@@ -337,42 +324,56 @@ document.addEventListener("DOMContentLoaded", function() {
         localStorage.setItem('loginData', JSON.stringify(loginData));
     }
 
-    function blockUser(username) {
-        // Block the user by storing the block duration
-        const blockData = JSON.parse(localStorage.getItem('blockData')) || {};
-        blockData[username] = Date.now() + blockDuration;
-        localStorage.setItem('blockData', JSON.stringify(blockData));
-    }
 
-
-    // checks 
+/*
     function validatePassword(password) {
         // Regular expressions for password validation
         const upperCaseRegex = /[A-Z]/;
+        const lowerCaseRegex = /[a-z]/;
         const numberRegex = /[0-9]/;
-        const tabRegex = /\t/g;
-
-        // Check if the password contains at least one upper case letter
+        const minLength = 3;
+    
+        // Check if the password contains at least one uppercase letter
         if (!upperCaseRegex.test(password)) {
-            return "must contains at least one uppercase"; 
+            return "Password must contain at least one uppercase letter"; 
         }
-
+    
+        // Check if the password contains at least one lowercase letter
+        if (!lowerCaseRegex.test(password)) {
+            return "Password must contain at least one lowercase letter"; 
+        }
+    
         // Check if the password contains at least one number
         if (!numberRegex.test(password)) {
-            return "must contains at least one number"; 
+            return "Password must contain at least one number"; 
         }
-
-        // Check if the password contains at least three tabs
-        const tabCount = (password.match(tabRegex) || []).length;
-        if (tabCount < 3) {
-            return "must contains at least 3 charachters"; 
+    
+        // Check if the password contains at least three characters
+        if (password.length < minLength) {
+            return "Password must contain at least 3 characters"; 
         }
-
+    
         // Return true if all conditions are met
+        return "true";
+    }
+    */
+    
+/*
+    // checks 
+    function validatePassword(password) {
+        // Regular expression for password validation
+        const passwordRegex = /^(?=[a-z0-9!@#$%^&*()+=?]*[A-Z])(?=[A-Z0-9!@#$%^&*()+=?]*[a-z])[A-Za-z0-9!@#$%^&*()+=?]*$/;
+    
+        // Check if the password matches the pattern
+        if (!passwordRegex.test(password)) {
+            return "Password must contain at least one uppercase, one lowercase characters and a number"; 
+        }
+    
+        // Return true if the password meets the criteria
         return true;
     }
+    */
     
-   
 });
 
 
