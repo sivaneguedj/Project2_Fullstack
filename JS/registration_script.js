@@ -305,7 +305,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (user && user.password === password_log) {
             resetLoginAttempts(username);
             alert("Login successful.");
-            window.location.href = "/HTML/homepage.html"; // Redirect to homepage.html
+            window.location.href = "../HTML/homepage.html"; // Redirect to homepage.html
         } else {
             // Increment login attempts
             console.log('hi');

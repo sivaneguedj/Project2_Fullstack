@@ -1,0 +1,82 @@
+ /* Navigation Bar Styling */
+ .navbar {
+    position: fixed;
+    /* Fixed position at the top */
+    top: 0;
+    /* Position it at the top of the viewport */
+    left: 0;
+    width: 100%;
+    /* Full width */
+    background-color: #000000;
+    /* Dark background color for the navbar */
+    overflow: hidden;
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    background-color: #377a61;
+    /* Darker background color when hovering over a link */
+}
+
+.navbar a.active {
+    background-color: #377a61;
+    /* Green color for the active link */
+}
+
+/* Content Styling */
+.content {
+    padding-top: 50px;
+    /* Add padding to the top of the content to prevent it from being hidden under the navbar */
+    padding-left: 20px;
+    /* Add some space on the left for better readability */
+    padding-right: 20px;
+    /* Add some space on the right for better readability */
+}
+
+.game-header {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.game-description {
+    text-align: center;
+    color: #666;
+}
+/* Header content styles */
+.header-content {
+   text-align: center;
+   margin-top: 50px; /* Adjust as needed */
+}
+
+.gradient-text {
+   background-image: linear-gradient(to bottom, #FFFFFF, #141e74);
+   -webkit-background-clip: text;
+   background-clip: text;
+   color: transparent;
+}
+
+.header-content h1 {
+   font-size: 50px; /* Adjust as needed */
+   font-weight: bold;
+   margin-bottom: 20px; /* Adjust as needed */
+}
+
+/* Footer styles */
+footer {
+    background-color: #000000;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

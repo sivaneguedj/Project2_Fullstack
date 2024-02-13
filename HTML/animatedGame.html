@@ -9,10 +9,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
     <title>animation game</title>
     <link rel="stylesheet" href="..\CSS\style.css">
+    <link href="../JS/frame.js" rel="stylesheet"> 
+    <link href="../JS/frame.css" rel="stylesheet"> 
 
 </head>
 
 <body>
+    <my-header></my-header>
     <canvas id="canvas1"></canvas>
 
     <img id="playerImage" src="..\IMG\players\Archer\Jump&Walk&Attack.png">
@@ -23,18 +26,15 @@
     <div id="openPage">
         <img id="background" src="..\IMG\background3\PNG\game_background_2\game_background_2.png">
         <div id="explain">
-            <!-- <img id="board"  src="..\gui\board.png" alt="Image"  >
-                <p>game dragons and hunter</p> -->
         </div>
         <button id="playBtn">
-            <!-- <img src="..\gui\bottun.png" alt="Image" > -->
             <div class="bottun-text">Play</div>
         </button>
     </div>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
     <script src="..\JS\index.js"></script>
-
+    <my-footer></my-footer>
 </body>
 
 </html>

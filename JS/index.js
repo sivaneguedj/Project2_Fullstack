@@ -247,7 +247,7 @@ window.addEventListener('load', function () {
             context.drawImage(this.image, this.frameX * this.width, 0, this.width, this.height,
                 this.x, this.y, this.width, this.height);
         }
-        update(deltaTime) {
+        update() {
             this.x -= this.speed * faster;
         }
 
@@ -255,9 +255,7 @@ window.addEventListener('load', function () {
     function handleEnemiesAndDiamonds(deltaTime, randPath) {
         let randPath1 = randPath * (350) || 250;
         let randPath2 = randPath * (250) || 350;
-        console.log('rand1' + randPath1);
-        console.log('rand3' + randPath2);
-        console.log('enemy ' + (Timer > (Interval + randomInterval)));
+   
         if (Timer > (Interval + randomInterval)) {
             enemies.push(new Enemy(canvas.width, canvas.height, randPath1));
             let placement = 70;
@@ -277,12 +275,11 @@ window.addEventListener('load', function () {
         enemies = enemies.filter(enemy => !enemy.markedForDeletion);
         diamonds.forEach(diamond => {
             diamond.draw(ctx);
-            diamond.update(deltaTime);
+            diamond.update();
         });
         diamonds = diamonds.filter(diamond => !diamond.markedForDeletion);
 
     }
-
 
     function displayStatusText(context) {
         context.fiilStyle = 'black';
@@ -304,13 +301,11 @@ window.addEventListener('load', function () {
     let Timer = 0;
     let Interval = 20;
     let randomInterval = Math.random() * 1000 + 500;
-    console.log(randomInterval);
 
     function animate(timeStamp) {
         if (Interval > 3) {
             Interval -= 0.2;
         }
-        console.log(Interval)
 
         faster += 0.0001;
         let randPath = Math.round(Math.random());
@@ -324,7 +319,19 @@ window.addEventListener('load', function () {
         player.update(input, deltaTime, background, enemies, diamonds);
         handleEnemiesAndDiamonds(deltaTime, randPath);
         displayStatusText(ctx);
-        if (!gameOver) requestAnimationFrame(animate);//
+        if (!gameOver){requestAnimationFrame(animate);} 
+        else{
+            let record=Cookies.get('Dragons&Diamonds')
+            if(record>score)
+            {
+                Cookies.set("Dragons&Diamonds",record,{expires: 7});
+            }
+            else{
+                Cookies.set("Dragons&Diamonds",score,{expires: 7});
+            }
+            
+           
+        };
 
     }
     let start = this.document.getElementById("playBtn");

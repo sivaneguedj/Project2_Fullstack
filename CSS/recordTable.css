@@ -1,0 +1,90 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1f1f1f; /* Dark background color for the entire page */
+    color: #fff; /* Text color */
+}
+
+/* Table Styling */
+table {
+    width: 60%; /* Set the width of the table */
+    margin: 50px auto; /* Center the table horizontally */
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden; /* Hide overflow content */
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+    border: none; /* Remove borders */
+}
+
+th {
+    background-color: #2b468f; /* Header background color */
+    color: #fff; /* Header text color */
+    text-transform: uppercase; /* Uppercase header text */
+    font-size: 14px; /* Font size for header */
+}
+
+/* Content Styling */
+.container {
+    text-align: center;
+    padding-top: 20px;
+}
+
+h1 {
+    color: #fff;
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+/* Different colors for each row */
+tr:nth-child(odd) {
+    background-color: #484848; /* Dark gray */
+    border-radius: 10px; /* Rounded corners */
+}
+
+/* Different colors for each row */
+/* tr:nth-child(1) {
+    background-color: #991e12; 
+}
+
+tr:nth-child(2) {
+    background-color: #f8da94;
+}
+
+tr:nth-child(3) {
+    background-color: #a8e2d3; 
+}
+tr:nth-child(4) {
+    background-color: #ee9189;  
+}
+
+tr:nth-child(5) {
+    background-color: #f8da94;
+}
+
+tr:nth-child(6) {
+    background-color: #a8e2d3; 
+}
+tr:nth-child(7) {
+    background-color: #ee9189;
+} */
+
+/* Hover effect on table rows */
+tr:hover {
+    background-color: #444; /* Darker background color on hover */
+}
+
+/* Add space between rows */
+tr {
+    margin-bottom: 10px;
+}
+
+/* Add transition for smoother hover effect */
+tr {
+    transition: background-color 0.3s ease;
+}
