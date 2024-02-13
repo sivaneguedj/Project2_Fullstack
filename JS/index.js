@@ -319,10 +319,12 @@ window.addEventListener('load', function () {
         player.update(input, deltaTime, background, enemies, diamonds);
         handleEnemiesAndDiamonds(deltaTime, randPath);
         displayStatusText(ctx);
-        if (!gameOver) { requestAnimationFrame(animate); }
+        if (!gameOver) { 
+            requestAnimationFrame(animate); }
         else {
             var playing = JSON.parse(localStorage.getItem('user'));
             let record = Cookies.get(playing);
+            console.log(record+'hei');
             if(record>score)
             {
                 Cookies.set(playing,record,{expires: 7});
