@@ -255,7 +255,7 @@ window.addEventListener('load', function () {
     function handleEnemiesAndDiamonds(deltaTime, randPath) {
         let randPath1 = randPath * (350) || 250;
         let randPath2 = randPath * (250) || 350;
-   
+
         if (Timer > (Interval + randomInterval)) {
             enemies.push(new Enemy(canvas.width, canvas.height, randPath1));
             let placement = 70;
@@ -319,20 +319,27 @@ window.addEventListener('load', function () {
         player.update(input, deltaTime, background, enemies, diamonds);
         handleEnemiesAndDiamonds(deltaTime, randPath);
         displayStatusText(ctx);
-        if (!gameOver){requestAnimationFrame(animate);} 
-        else{
-            let record=Cookies.get('Dragons&Diamonds')
+        if (!gameOver) { requestAnimationFrame(animate); }
+        else {
+            var playing = JSON.parse(localStorage.getItem('user'));
+            let record = Cookies.get(playing);
             if(record>score)
             {
-                Cookies.set("Dragons&Diamonds",record,{expires: 7});
+                Cookies.set(playing,record,{expires: 7});
             }
             else{
-                Cookies.set("Dragons&Diamonds",score,{expires: 7});
-                var users = JSON.parse(localStorage.getItem('users'))
-                //set in local sorage
+            Cookies.set(playing, score, { expires: 7 });
+            var users = JSON.parse(localStorage.users);
+            for (var i = 0; i < users.length; i++) {
+                if (playing === users[i].username) {  //look for match with name
+                    users[i].scoreGame2 = score;  //add two
+                    break;  //exit loop since you found the person
+                }
             }
-            
-           
+            localStorage.setItem("users", JSON.stringify(users));
+            }
+
+
         };
 
     }
