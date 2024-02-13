@@ -272,8 +272,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // If the user is found, return true (login successful), otherwise return false
         if (user && user.password === password_log) {
-            resetLoginAttempts(username);
-            // const user = JSON.parse(localStorage.getItem('user'));
+            localStorage.setItem('user', JSON.stringify(username));
+
+            resetLoginAttempts(username);            
             // localStorage.setItem('user', JSON.stringify(user[username]));
             alert("Login successful.");
             window.location.href = "../HTML/homepage.html"; // Redirect to homepage.html
