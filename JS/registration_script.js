@@ -273,7 +273,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // If the user is found, return true (login successful), otherwise return false
         if (user && user.password === password_log) {
             localStorage.setItem('user', JSON.stringify(username));
-
+            
             resetLoginAttempts(username);            
             // localStorage.setItem('user', JSON.stringify(user[username]));
             alert("Login successful.");
