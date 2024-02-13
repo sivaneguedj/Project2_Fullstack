@@ -229,7 +229,9 @@ document.addEventListener("DOMContentLoaded", function() {
             username: username,
             birthday: birthday,
             mail: mail,
-            password: password
+            password: password,
+            scoreGame1 : '0/10',
+            scoreGame2 : '0'
         };
 
         // Add the new user to the array of users

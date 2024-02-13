@@ -42,28 +42,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 
-        // Filter users who have a score for "Game 1"
-    var usersWithGame1Score = users.filter(user => user.scoreGame1);
-
-    // Sort users based on their scores for "Game 1" in descending order
-    usersWithGame1Score.sort(function(a, b) {
-        var scoreA = parseInt(a.scoreGame1.split('/')[0]); // Assuming scores are in the format "x/y"
-        var scoreB = parseInt(b.scoreGame1.split('/')[0]);
-        return scoreB - scoreA;
-    });
-
-    // Display the top three users with the highest scores for "Game 1"
-    var recordsTable = document.querySelector('.records table');
-    for (var i = 0; i < Math.min(3, usersWithGame1Score.length); i++) {
-        var user = usersWithGame1Score[i];
-        var row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${user.username}</td>
-            <td>Animal Quiz</td>
-            <td>${user.scoreGame1}</td>
-        `;
-        recordsTable.appendChild(row);
-    }
+    
 
 });
 
