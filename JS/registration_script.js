@@ -136,12 +136,12 @@ document.addEventListener("DOMContentLoaded", function() {
                     alert("This email is already registered in the system. Do you want to log in?");
                 }
                 else {
-                    pass = validatePassword(password);
+                    /*pass = validatePassword(password);
                     if(pass != "true") {
                         alert(pass);
-                    }else {
+                    }else {*/
                     registerUser(last_name.value, first_name.value, username_reg.value, birthday.value, mail.value, password.value);
-                    }
+                   /* }*/
                 }
             }
             else {
