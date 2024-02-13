@@ -53,6 +53,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     localStorage.setItem('users', JSON.stringify(users));
 
+
+    // Login Tab
     loginTab.addEventListener("click", function() {
         loginContent.classList.add("active");
         registerContent.classList.remove("active");
@@ -84,6 +86,9 @@ document.addEventListener("DOMContentLoaded", function() {
         */
     });
 
+
+
+    // Register Tab
     registerTab.addEventListener("click", function() {
         registerContent.classList.add("active");
         loginContent.classList.remove("active");
@@ -123,6 +128,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
+    // Want to create an account?
     var registerLink = document.querySelector('.register-link');
 
     registerLink.addEventListener('click', function(event) {
@@ -138,8 +144,15 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
+    // Define the maximum login attempts and the block duration in milliseconds
+    const maxAttempts = 3;
+    const blockDuration = 3 * 60 * 1000; // 3 minutes in milliseconds
+
+
+    // Login
     loginForm.addEventListener("submit", function(event) {
         event.preventDefault();
+
         if(validateForm("logForm")) {
             // check if this user is already registered in the system
             if(checkUserExists(username_log.value)) {
@@ -150,6 +163,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
+
+    // Register
     registerForm.addEventListener("submit", function(event) {
         event.preventDefault();
         if(validateForm("regForm")) {
@@ -158,18 +173,29 @@ document.addEventListener("DOMContentLoaded", function() {
                 // check if this username is already taken
                 if(checkUserExists(username_reg.value)) {
                     alert("This username already exists in the system. Choose another one.");
+                    return
+                }
+
+                pass = validatePassword(password);
+                if(validatePassword(password) != true) {
+                    alert("Password is invalid" + pass);
+                    return
                 }
                 // check if this email is already registered in the system
                 else if (checkUserExistsRegistration(mail.value)) {
                     alert("This email is already registered in the system. Do you want to log in?");
                 }
                 else {
-                    registerUser(last_name.value, first_name.value, birthday.value, mail.value, password.value);
+                    registerUser(last_name.value, first_name.value, username_reg.value, birthday.value, mail.value, password.value);
                 }
             }
         }
     });
 
+
+
+
+    // Functions for checking
 
     function validateForm(formName) {
         // Get all form elements
@@ -196,18 +222,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Check if the mail's and password's confirmations are correct
     function checkConfirmations(mail, mail_conf, password, pas_conf) {
-        if (mail.value === mail_conf.value && password.value === pas_conf.value){
+        if (mail === mail_conf && password === pas_conf){
             return true;
         }
-        else if (mail.value !== mail_conf.value) {
-            mail_conf.value = 'Incorrect mail, make sure you type exactly the same address'; // METTRE EN ROUGE
+        else if (mail !== mail_conf) {
+            mail_conf = 'Incorrect mail, make sure you type exactly the same address'; // METTRE EN ROUGE
             return false;
-        } else if(password.value !== pas_conf.value){
-            pas_conf.value = 'Incorrect password, make sure you type exactly the password'; // METTRE EN ROUGE
+        } else if(password !== pas_conf){
+            pas_conf = 'Incorrect password, make sure you type exactly the password'; // METTRE EN ROUGE
             return false;
         } else {
-            mail_conf.value = 'Incorrect mail, make sure you type exactly the same address'; // METTRE EN ROUGE
-            pas_conf.value = 'Incorrect password, make sure you type exactly the password'; // METTRE EN ROUGE
+            mail_conf = 'Incorrect mail, make sure you type exactly the same address'; // METTRE EN ROUGE
+            pas_conf = 'Incorrect password, make sure you type exactly the password'; // METTRE EN ROUGE
         }
 
     }
@@ -220,8 +246,9 @@ document.addEventListener("DOMContentLoaded", function() {
         var users = JSON.parse(localStorage.getItem('users')) || [];
 
         // Check if the username exists in the stored user data
-        return users.some(user => user.username === username);
+        return users.some(user => user && user.username === username);
     }
+
 
     // Check if the user exists in local storage 
     function checkUserExistsRegistration(mail) {
@@ -229,22 +256,23 @@ document.addEventListener("DOMContentLoaded", function() {
         var users = JSON.parse(localStorage.getItem('users')) || [];
 
         // Check if the mail exists in the stored user data
-        return users.some(user => user.mail === mail);
+        return users.some(user => mail && user.mail === mail);
     }
 
+
     // Register a new user and store their data in local storage
-    function registerUser(last_name, first_name, birthday, mail, password) {
+    function registerUser(last_name, first_name, username, birthday, mail, password) {
         // Get existing users from local storage or initialize an empty array
         var users = JSON.parse(localStorage.getItem('users')) || [];
 
         // Create a new user object
         var newUser = {
-            lastName: last_name.value,
-            firstName: first_name.value,
-            username:username.value,
-            birthday:birthday.value,
-            mail: mail.value,
-            password: password.value
+            lastName: last_name,
+            firstName: first_name,
+            username:username,
+            birthday:birthday,
+            mail: mail,
+            password: password
         };
 
         // Add the new user to the array of users
@@ -256,24 +284,98 @@ document.addEventListener("DOMContentLoaded", function() {
         alert("Registration successful."); 
     }
 
+
     // Log in an existing user
     function loginUser(username, password_log) {
         // Get user data from local storage
         var users = JSON.parse(localStorage.getItem('users')) || [];
 
+        // Check if the user is blocked
+        const blockData = JSON.parse(localStorage.getItem('blockData')) || {};
+        const blockedUntil = blockData[username_log];
+        if (blockedUntil && Date.now() < blockedUntil) {
+            alert("Your account is blocked. Please try again later.");
+            return;
+        }
+
         // Find the user with the provided username and password
-        var user = users.find(user => user.username === username && user.password === password_log);
+        var user = users.find(user => user.username === username);
 
         // If the user is found, return true (login successful), otherwise return false
-        if (user) {
+        if (user && user.password === password_log) {
+            resetLoginAttempts(username);
             alert("Login successful.");
             window.location.href = "/HTML/homepage.html"; // Redirect to homepage.html
         } else {
-            alert("Invalid username or password.");
+            // Increment login attempts
+            console.log('hi');
+            const attempts = incrementLoginAttempts(username);
+            alert(`Invalid username or password. You have ${maxAttempts - attempts} attempts left.`);
+                // Block the user if they have exceeded the maximum attempts
+            if (attempts >= maxAttempts) {
+                blockUser(username);
+                alert("Your account has been blocked due to too many failed attempts. Please try again later.");
+            }
         }
+    }
+
+
+    // Checks for limit attempts    
+
+    function incrementLoginAttempts(username) {
+        // Increment login attempts for the given username
+        const loginData = JSON.parse(localStorage.getItem('loginData')) || {};
+        loginData[username] = (loginData[username] || 0) + 1;
+        localStorage.setItem('loginData', JSON.stringify(loginData));
+        return loginData[username];
+    }
+
+    function resetLoginAttempts(username) {
+        // Reset login attempts for the given username
+        const loginData = JSON.parse(localStorage.getItem('loginData')) || {};
+        delete loginData[username];
+        localStorage.setItem('loginData', JSON.stringify(loginData));
+    }
+
+    function blockUser(username) {
+        // Block the user by storing the block duration
+        const blockData = JSON.parse(localStorage.getItem('blockData')) || {};
+        blockData[username] = Date.now() + blockDuration;
+        localStorage.setItem('blockData', JSON.stringify(blockData));
+    }
+
+
+    // checks 
+    function validatePassword(password) {
+        // Regular expressions for password validation
+        const upperCaseRegex = /[A-Z]/;
+        const numberRegex = /[0-9]/;
+        const tabRegex = /\t/g;
+
+        // Check if the password contains at least one upper case letter
+        if (!upperCaseRegex.test(password)) {
+            return "must contains at least one uppercase"; 
+        }
+
+        // Check if the password contains at least one number
+        if (!numberRegex.test(password)) {
+            return "must contains at least one number"; 
+        }
+
+        // Check if the password contains at least three tabs
+        const tabCount = (password.match(tabRegex) || []).length;
+        if (tabCount < 3) {
+            return "must contains at least 3 charachters"; 
+        }
+
+        // Return true if all conditions are met
+        return true;
     }
     
    
 });
+
+
+
 
 
