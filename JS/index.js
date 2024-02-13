@@ -328,6 +328,8 @@ window.addEventListener('load', function () {
             }
             else{
                 Cookies.set("Dragons&Diamonds",score,{expires: 7});
+                var users = JSON.parse(localStorage.getItem('users'))
+                //set in local sorage
             }
             
            

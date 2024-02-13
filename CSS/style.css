@@ -1,5 +1,7 @@
 body {
     background: rgb(26, 24, 49);
+    background-image: url('../IMG/5073414.jpg');
+    background-size: cover;
 }
 
 #canvas1 {

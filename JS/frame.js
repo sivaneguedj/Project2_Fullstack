@@ -4,14 +4,10 @@ class MyHeader extends HTMLElement {
         <header>
         <!-- Navigation Bar -->
         <div class="navbar">
-            <a class="active" href="#">Home</a>
+            <a href="homepage.html">Home</a>
             <a href="registration.html">Login/SignUp</a>
-            <a href="recordTable.html">Records</a>
+            <a href="profile.html">Profile</a>
         </div>
-        <div class="header-content gradient-text">
-            <h1>Game Changer</h1>
-        </div>
-
     </header>
         `;
     }
@@ -28,3 +24,4 @@ class MyFooter extends HTMLElement {
 
 customElements.define('my-header', MyHeader)
 customElements.define('my-footer', MyFooter)
+{/* <a class="active" href="#">Home</a> */}

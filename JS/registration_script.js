@@ -273,6 +273,8 @@ document.addEventListener("DOMContentLoaded", function() {
         // If the user is found, return true (login successful), otherwise return false
         if (user && user.password === password_log) {
             resetLoginAttempts(username);
+            // const user = JSON.parse(localStorage.getItem('user'));
+            // localStorage.setItem('user', JSON.stringify(user[username]));
             alert("Login successful.");
             window.location.href = "../HTML/homepage.html"; // Redirect to homepage.html
         } else {
@@ -331,38 +333,38 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 
-/*
-    function validatePassword(password) {
-        // Regular expressions for password validation
-        const upperCaseRegex = /[A-Z]/;
-        const lowerCaseRegex = /[a-z]/;
-        const numberRegex = /[0-9]/;
-        const minLength = 3;
+
+    // function validatePassword(password) {
+    //     // Regular expressions for password validation
+    //     const upperCaseRegex = /[A-Z]/;
+    //     const lowerCaseRegex = /[a-z]/;
+    //     const numberRegex = /[0-9]/;
+    //     const minLength = 3;
     
-        // Check if the password contains at least one uppercase letter
-        if (!upperCaseRegex.test(password)) {
-            return "Password must contain at least one uppercase letter"; 
-        }
+    //     // Check if the password contains at least one uppercase letter
+    //     if (!upperCaseRegex.test(password)) {
+    //         return "Password must contain at least one uppercase letter"; 
+    //     }
     
-        // Check if the password contains at least one lowercase letter
-        if (!lowerCaseRegex.test(password)) {
-            return "Password must contain at least one lowercase letter"; 
-        }
+    //     // Check if the password contains at least one lowercase letter
+    //     if (!lowerCaseRegex.test(password)) {
+    //         return "Password must contain at least one lowercase letter"; 
+    //     }
     
-        // Check if the password contains at least one number
-        if (!numberRegex.test(password)) {
-            return "Password must contain at least one number"; 
-        }
+    //     // Check if the password contains at least one number
+    //     if (!numberRegex.test(password)) {
+    //         return "Password must contain at least one number"; 
+    //     }
     
-        // Check if the password contains at least three characters
-        if (password.length < minLength) {
-            return "Password must contain at least 3 characters"; 
-        }
+    //     // Check if the password contains at least three characters
+    //     if (password.length < minLength) {
+    //         return "Password must contain at least 3 characters"; 
+    //     }
     
-        // Return true if all conditions are met
-        return "true";
-    }
-    */
+    //     // Return true if all conditions are met
+    //     return "true";
+    // }
+
     
 /*
     // checks 
