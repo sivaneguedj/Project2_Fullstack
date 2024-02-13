@@ -96,6 +96,9 @@ function selectAnswer(e) {
     clearInterval(timer)
     const selectedButton = e ? e.target : null
     const correct = selectedButton ? selectedButton.dataset.correct : false
+
+
+    
     setStatusClass(document.body, correct)
     Array.from(answerButtonElement.children).forEach(button => {
         setStatusClass(button, button.dataset.correct)
