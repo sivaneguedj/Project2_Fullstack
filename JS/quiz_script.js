@@ -11,31 +11,34 @@ const timerElement = document.getElementById('timer')
 const scoreElement = document.getElementById('score-value');
 
 let score = 0; // Initialize score
-let questionsAnswered = 0;
+let questionsAnswered = 0; 
 
-let shuffledQuestions, currentQuestionIndex, timer
+let shuffledQuestions, currentQuestionIndex, timer 
 
 startButton.addEventListener('click', startGame)
-nextButton.addEventListener('click', () => {
+nextButton.addEventListener('click', () => {    // when clicking on start increments ti index of question to 1
     currentQuestionIndex++
     setNextQuestion()
 })
 
 function startGame() {
     questionsAnswered = 0;
-    timerElement.classList.add('initial-style');
-    h1Element.innerText = "ANIMAL'S Quiz";
+    timerElement.classList.add('initial-style');    // updates style 
+    h1Element.innerText = "ANIMAL'S Quiz";          // setting h1 for beggining of the game
     startButton.classList.add('hide')
     h2Element.classList.add('hide')
     h3Element.classList.add('hide')
-    shuffledQuestions = questions.sort(() => Math.random() - .5)
-    currentQuestionIndex = 0
+    shuffledQuestions = questions.sort(() => Math.random() - .5)    // takes the array of the question and change there mix thye order randomly
+                                                                    // just once (at the beggining of the game) so every time we restart the game , the questions would be in a different order
+    currentQuestionIndex = 0                        // reinitialize the index to start from the beggining of the array
     questionContainerElement.classList.remove('hide')
     setNextQuestion()
     score = 0;
     updateScore();
 }
 
+
+// update style for the next question, starts the timer, find the image of the correct answer, and show the question according to the index
 function setNextQuestion() {
     timerElement.classList.remove('initial-style');
     timerElement.classList.add('question-style');
@@ -47,14 +50,16 @@ function setNextQuestion() {
     showQuestion(shuffledQuestions[currentQuestionIndex])
 }
 
+
+// change element text to set the current question and its answers
 function showQuestion(question){
     h1Element.classList.add('h1_question')
     questionElement.innerText = question.question
-    question.answers.forEach(answer => {
+    question.answers.forEach(answer => {                // each answer will be a button
         const button = document.createElement('button')
-        button.innerText = answer.text
+        button.innerText = answer.text                  // set the answers in them
         button.classList.add('btn')
-        if (answer.correct) {
+        if (answer.correct) {                           // updates in the dataset which one is the correct answer
             button.dataset.correct = answer.correct
         }
         button.addEventListener('click', selectAnswer)
@@ -62,11 +67,15 @@ function showQuestion(question){
     });
 }
 
+
+//reser original background
 function resetBackgroundColor() {
     document.body.classList.remove('correct');
     document.body.classList.remove('wrong');
 }
 
+
+//
 function resetState() {
     nextButton.classList.add('hide')
     while (answerButtonElement.firstChild) {
@@ -74,11 +83,15 @@ function resetState() {
     }
 }
 
+
+// finds the image of the correct answer
 function findImg(i) {
     const correctAnswerImg= shuffledQuestions[i].image
     document.getElementById('answer-image').src = correctAnswerImg;
 }
 
+
+// initialize the timer to count from 30 second to zero
 function startTimer() {
     timerElement.innerText = '30';
     timer = setInterval(() => {
@@ -92,18 +105,22 @@ function startTimer() {
     }, 1000)
 }
 
+
+// re-initialize the timer 
 function resetTimer() {
     clearInterval(timer);
     timerElement.innerText = '';
 }
 
+
+// when selecting an answer
 function selectAnswer(e) {
-    clearInterval(timer)
-    const selectedButton = e ? e.target : null
-    const correct = selectedButton ? selectedButton.dataset.correct : false
+    clearInterval(timer)                        // stops the timer
+    const selectedButton = e ? e.target : null  // takes the answer selected
+    const correct = selectedButton ? selectedButton.dataset.correct : false   // checks in the dataset if we selected the correct one
 
     // Increment questions answered count
-    questionsAnswered++;
+    questionsAnswered++;        
         
     setStatusClass(document.body, correct)
     Array.from(answerButtonElement.children).forEach(button => {
@@ -117,7 +134,7 @@ function selectAnswer(e) {
     findImg(currentQuestionIndex)
     document.getElementById('answer-image').classList.remove('hide');      
 
-    if (shuffledQuestions.length > currentQuestionIndex + 1) {
+    if (shuffledQuestions.length > currentQuestionIndex + 1) {   // checks if we passed on all the questions
         nextButton.classList.remove('hide')
     } else {
         startButton.innerText = 'Restart'
@@ -134,6 +151,8 @@ function selectAnswer(e) {
     }
 }
 
+
+// set our class element to correct or incorrect
 function setStatusClass(element, correct) {
     clearStatusClass(element)
     if (correct) {
@@ -142,6 +161,7 @@ function setStatusClass(element, correct) {
         element.classList.add('wrong')
     }
 }
+
 
 function clearStatusClass(element) {
     element.classList.remove('correct')
@@ -181,6 +201,7 @@ function endGame() {
 }
 
 
+// Saved Quiz Questions
 const questions = [
     {
         question: 'Though they sound happy, what animal\'s "laugh" is a reaction to being threatened?',

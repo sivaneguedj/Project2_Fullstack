@@ -269,6 +269,7 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
+
         // Find the user with the provided username and password
         var user = users.find(user => user.username === username);
 
@@ -299,6 +300,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             }
         }
+        
     }
 
 
@@ -331,7 +333,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function resetLoginAttempts(username) {
         // Reset login attempts for the given username
         const loginData = JSON.parse(localStorage.getItem('loginData')) || {};
-        delete loginData[username];
+        loginData[username] = 0;
         localStorage.setItem('loginData', JSON.stringify(loginData));
     }
 
