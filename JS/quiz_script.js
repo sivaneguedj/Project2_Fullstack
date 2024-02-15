@@ -6,10 +6,12 @@ const questionElement = document.getElementById('question')
 const answerButtonElement = document.getElementById('answer-buttons')
 const h1Element = document.querySelector('h1')
 const h2Element = document.querySelector('h2')
+const h3Element = document.querySelector('h3')
 const timerElement = document.getElementById('timer')
 const scoreElement = document.getElementById('score-value');
 
 let score = 0; // Initialize score
+let questionsAnswered = 0;
 
 let shuffledQuestions, currentQuestionIndex, timer
 
@@ -20,9 +22,12 @@ nextButton.addEventListener('click', () => {
 })
 
 function startGame() {
+    questionsAnswered = 0;
     timerElement.classList.add('initial-style');
+    h1Element.innerText = "ANIMAL'S Quiz";
     startButton.classList.add('hide')
     h2Element.classList.add('hide')
+    h3Element.classList.add('hide')
     shuffledQuestions = questions.sort(() => Math.random() - .5)
     currentQuestionIndex = 0
     questionContainerElement.classList.remove('hide')
@@ -97,8 +102,9 @@ function selectAnswer(e) {
     const selectedButton = e ? e.target : null
     const correct = selectedButton ? selectedButton.dataset.correct : false
 
-
-    
+    // Increment questions answered count
+    questionsAnswered++;
+        
     setStatusClass(document.body, correct)
     Array.from(answerButtonElement.children).forEach(button => {
         setStatusClass(button, button.dataset.correct)
@@ -122,6 +128,10 @@ function selectAnswer(e) {
         score++; // Increment score for correct answer
         updateScore(); // Update score display
     }  
+
+    if (questionsAnswered === 10) {
+        endGame(); // Call function to end the game when 10 questions have been answered
+    }
 }
 
 function setStatusClass(element, correct) {
@@ -141,6 +151,35 @@ function clearStatusClass(element) {
 function updateScore() {
     scoreElement.textContent = score;
 }
+
+function endGame() {
+    //  hide the question container and display a message indicating the end of the game.
+    questionContainerElement.classList.add('hide');
+    timerElement.classList.remove('initial-style', 'question-style');
+    timerElement.classList.add('hide')
+
+     // Remove background color classes from body
+     resetState()
+     resetBackgroundColor()
+     document.getElementById('answer-image').classList.add('hide');
+
+    h1Element.innerText = 'Game Over';
+    h2Element.innerText = 'You have answered all questions.';
+    h2Element.classList.remove('hide');
+    h3Element.classList.remove('hide');
+
+    if (score === 10) {
+        h3Element.innerText = "You're a Genius!";
+    } else if (score >= 5 && score < 10) {
+        h3Element.innerText = "You did a good job!";
+    } else {
+        h3Element.innerText = "Not bad... maybe next time 😊";
+    }
+
+    startButton.innerText = 'Restart';
+    startButton.classList.remove('hide');
+}
+
 
 const questions = [
     {
@@ -224,7 +263,7 @@ const questions = [
         image: '/IMG/prairie_dog.jpeg'
     },
     {
-        question: 'An individual animal of which type was found to be at least 272 years old, suggesting that its type includes the world’s longest-living vertebrate?',
+        question: 'An individual animal of which type was found to be at least 272 years old, suggesting that its type includes the worlds longest-living vertebrate?',
         answers: [
             {text: 'Indian elephant', correct: false},
             {text: 'Greenland shark', correct: true},

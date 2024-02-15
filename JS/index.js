@@ -325,9 +325,9 @@ window.addEventListener('load', function () {
             var playing = JSON.parse(localStorage.getItem('user'));
             let record = Cookies.get(playing);
             console.log(record+'hei');
-            if(record>score)
-            {
-                Cookies.set(playing,record,{expires: 7});
+            let currentUserScore = score;
+            if (record && record > score) {
+                currentUserScore = record;
             }
             else{
             Cookies.set(playing, score, { expires: 7 });
