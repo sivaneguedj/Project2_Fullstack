@@ -1,7 +1,9 @@
 
+
+//game of dragons and diamonds the player can move back forward up and down, the dragons and diamonds apear randomly on the screan,
+//the player needs to avoid the dragons and collect diamonds,if the player and a dragon crish the game ends
 window.addEventListener('load', function () {
     const canvas = document.getElementById("canvas1");
-    // canvas.style.display = "block";
     const ctx = canvas.getContext('2d');
     canvas.width = 800;
     canvas.height = 720;
@@ -24,10 +26,8 @@ window.addEventListener('load', function () {
                 if ((e.key === 'ArrowDown' ||
                     e.key === 'ArrowUp' ||
                     e.key === 'ArrowLeft' ||
-                    e.key === 'ArrowRight' ||
-                    e.key === 'Enter')
+                    e.key === 'ArrowRight' )
                     && this.keys.indexOf(e.key) === -1) {
-                    // if(this.keys.length>3) this.keys.splice(0, this.keys.length)
                     this.keys.push(e.key);
                 }
             });
@@ -36,8 +36,7 @@ window.addEventListener('load', function () {
                 if (e.key === 'ArrowDown' ||
                     e.key === 'ArrowUp' ||
                     e.key === 'ArrowLeft' ||
-                    e.key === 'ArrowRight' ||
-                    e.key === 'Enter') {
+                    e.key === 'ArrowRight') {
                     this.keys.splice(this.keys.indexOf(e.key), 1);
 
                 }
@@ -67,20 +66,18 @@ window.addEventListener('load', function () {
             this.weight = 1;
             this.vy = 0;
         }
+        //function that updates the background to go faster towards the player if he decided to walk forward
         backgroundUpdate(background) {
             if ((background.x - this.speed) <= 0) background.x -= this.speed;
             if (background.x < 0 - background.width) background.x = 0;
         }
+        //function that apdates the frame in the player pucture so it will look like he walks
         sprite() {
             if (this.frameX >= this.maxFrame) this.frameX = 0;
             else this.frameX++;
         }
+        //drawing the player on the canvas 
         draw(context) {
-            // context.strokeStyle = 'white';
-            // context.strokeRect(this.x, this.y, this.width, this.height);
-            // context.beginPath();
-            // context.arc(this.x + this.width / 2, this.y + this.height / 2, this.width / 2, 0, Math.PI * 2);
-            // context.stroke();
             context.drawImage(this.image, this.frameX * this.width, this.frameY * this.height,
                 this.width, this.height, this.x, this.y, this.width, this.height);
         }
@@ -115,21 +112,25 @@ window.addEventListener('load', function () {
             }
 
             //controls
+            //go forward
             if (input.keys.indexOf('ArrowRight') > -1) {
                 this.speed = 5;
                 step.play();
                 this.sprite();
                 this.backgroundUpdate(background);
             }
+            //go back
             else if (input.keys.indexOf('ArrowLeft') > -1) {
                 this.speed = -5;
                 this.backgroundUpdate(background);
 
             }
+            //arrow down will change the path of the player to the bottom path
             else if (input.keys.indexOf('ArrowDown') > -1) {
                 this.y = this.gameHeight - 35;
 
             }
+             //arrow up will change the path of the player to the top path
             else if (input.keys.indexOf('ArrowUp') > -1) {
                 this.y = this.gameHeight - 130;
             }
@@ -165,22 +166,16 @@ window.addEventListener('load', function () {
             this.width = 1000;
             this.height = 720;
             this.speed = 2;
-
-
         }
         draw(context) {
             context.drawImage(this.image, this.x, this.y, this.width, this.height);
             context.drawImage(this.image, this.x + this.width, this.y, this.width, this.height);
         }
+        //make the background go toward the player
         update() {
             this.x -= this.speed * faster;
             if (this.x < 0 - this.width) this.x = 0;
         }
-
-
-    }
-    class fire {
-
     }
 
     class Enemy {
@@ -201,11 +196,6 @@ window.addEventListener('load', function () {
             this.markedForDeletion = false;
         }
         draw(context) {
-            // context.strokeStyle = 'white';
-            // context.strokeRect(this.x, this.y, this.width, this.height);
-            // context.beginPath();
-            // context.arc(this.x + this.width / 2, this.y + this.height / 2, this.width / 2, 0, Math.PI * 2);
-            // context.stroke();
             context.drawImage(this.image, this.frameX * this.width, 0, this.width, this.height,
                 this.x, this.y, this.width, this.height);
         }
@@ -253,13 +243,14 @@ window.addEventListener('load', function () {
 
     }
     function handleEnemiesAndDiamonds(deltaTime, randPath) {
+        //select randomly which path the dragon will be displayed in and chose the other path for the diamonds
         let randPath1 = randPath * (350) || 250;
         let randPath2 = randPath * (250) || 350;
-
         if (Timer > (Interval + randomInterval)) {
             enemies.push(new Enemy(canvas.width, canvas.height, randPath1));
             let placement = 70;
             for (let i = 0; i < 3; i++) {
+                //push 3 diamonds with an offset in their placement
                 diamonds.push(new Diamond(canvas.width, canvas.height, randPath2, i * placement));
             }
             randomInterval = Math.random() * 1000 + 500;
@@ -268,20 +259,25 @@ window.addEventListener('load', function () {
         else {
             Timer += deltaTime;
         }
+        //draw and update the new enemies
         enemies.forEach(enemy => {
             enemy.draw(ctx);
             enemy.update(deltaTime);
         });
+        //delete all the enemies that passed the end of the picture
         enemies = enemies.filter(enemy => !enemy.markedForDeletion);
+         //draw and update the new diamonds
         diamonds.forEach(diamond => {
             diamond.draw(ctx);
             diamond.update();
         });
+        //delete all the diamonds that the player collected-was close to
         diamonds = diamonds.filter(diamond => !diamond.markedForDeletion);
 
     }
 
     function displayStatusText(context) {
+        //dispaly score and game over when the play is too close to a dragon-checked in the player's function
         context.fiilStyle = 'black';
         context.font = '60px Honk, system-ui';
         context.fillText('Score ' + score, 20, 50);
@@ -306,8 +302,8 @@ window.addEventListener('load', function () {
         if (Interval > 3) {
             Interval -= 0.2;
         }
-
         faster += 0.0001;
+        //random number-1 or 0
         let randPath = Math.round(Math.random());
         //time stamp is a feature of animate, it automatically generates a timestamp
         const deltaTime = timeStamp - lastTime;//how many ms the computer need to serve one animation stamp
@@ -322,21 +318,25 @@ window.addEventListener('load', function () {
         if (!gameOver) { 
             requestAnimationFrame(animate); }
         else {
+            //the corrent user name
             var playing = JSON.parse(localStorage.getItem('user'));
+            //if the game ended look of the last record that was saved in the cookie
             let record = Cookies.get(playing);
-            console.log(record+'hei');
             let currentUserScore = score;
-            if (record && record > score) {
+            //if the the user didn't break the record the record remains the same
+            if (record  > score) {
                 currentUserScore = record;
             }
+            //if he broke the record update the cookie that saves his record to save the new record
             else{
             Cookies.set(playing, score, { expires: 7 });
+            //update the local storage to with the new record
             var users = JSON.parse(localStorage.users);
             for (var i = 0; i < users.length; i++) {
                 if (playing === users[i].username) {  //look for match with name
-                    users[i].scoreGame2 = score;  //add two
-                    break;  //exit loop since you found the person
-                }
+                    users[i].scoreGame2 = score;  //update the core 
+                    break;  
+                }person
             }
             localStorage.setItem("users", JSON.stringify(users));
             }
@@ -346,6 +346,7 @@ window.addEventListener('load', function () {
 
     }
     let start = this.document.getElementById("playBtn");
+    //after listen to the play button
     start.addEventListener("click", function run() {
         const openPage = document.getElementById("openPage");
         openPage.style.display = "none";
